@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   path: string;
@@ -6,7 +6,19 @@ type Props = {
 };
 
 const Route = ({ path, component }: Props) => {
-  return window.location.pathname === path ? <>{component}</> : null;
+  const [curPath, setCurPath] = useState(window.location.pathname);
+  useEffect(() => {
+    const onLocationPathname = () => {
+      setCurPath(window.location.pathname);
+    };
+
+    window.addEventListener("popstate", onLocationPathname);
+
+    return () => {
+      window.removeEventListener("popstate", onLocationPathname);
+    };
+  }, []);
+  return curPath === path ? <>{component}</> : null;
 };
 
 export default Route;

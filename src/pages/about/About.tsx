@@ -1,7 +1,18 @@
 import React from "react";
+import useRouter from "../../hooks/useRouter";
 
 const About = () => {
-  return <div>어바웃이야!</div>;
+  const { push } = useRouter();
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    push("/");
+  };
+  return (
+    <div>
+      <div>root</div>
+      <a onClick={handleClick}>home으로 가자!</a>
+    </div>
+  );
 };
 
 export default About;
